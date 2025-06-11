@@ -1,0 +1,119 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+
+    <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+
+</head>
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Optimal road trip planning</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+                    {% if request.session.username in "admin" %}
+                        <li><a href="/addtour">Add Tour</a>
+                        <li><a href="/addplace">Add Place</a></li>
+                    {% endif %}
+                    <li><a href="/viewtours">View Tours</a></li>
+                    <li><a href="/viewplaces">View Place</a></li>
+                    {% if request.session.username not in "admin" %}
+                        <li><a href="/sendmessage">Send Message</a>
+                    {% endif %}
+                    <li><a href="/viewmessages">View Message</a></li>
+                    <li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+
+            <div id="content">
+
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+                <h1><strong>{{message}}</strong></h1>
+
+                <table id="customers">
+                  <tr>
+                      <th>Name</th>
+                      <th>Starting Date</th>
+                      <th>Ending Date</th>
+                      <th>Price</th>
+                      <th>Travelon</th>
+                      <th>Contact</th>
+                      <th>Travel Type</th>
+                      <th>Places Covered</th>
+                      <th>Recommended Route</th>
+                      {% if request.session.username not in "admin" %}
+                          <th>Register</th>
+                      {% endif %}
+                      {% if request.session.username in "admin" %}
+                          <th>registered users</th>
+                          <th>delete</th>
+                      {% endif %}
+                  </tr>
+                    {% for tour in tours %}
+                        <tr>
+                            <td>{{ tour.name }}</td>
+                            <td>{{ tour.startdateofjourney }}</td>
+                            <td>{{ tour.enddateofjourney }}</td>
+                            <td>{{ tour.price }}</td>
+                            <td>{{ tour.travelon }}</td>
+                            <td>{{ tour.contact }}</td>
+                            <td>{{ tour.traveltype }}</td>
+                            <td><a href="/viewtourplaces?tourid={{ tour.id }}">view places</a></td>
+                            <td><a href="/predictbestpath?tour={{ tour.id }}">route plan</a></td>
+                            {% if request.session.username not in "admin" %}
+                                <td><a href="/requesttour?tour={{ tour.id }}">Register</a></td>
+                            {% endif %}
+                            {% if request.session.username in "admin" %}
+                                <td><a href="/viewtourrequests?tour={{ tour.id }}">Registered Users</a></td>
+                            {% endif %}
+                            {% if request.session.username in "admin" %}
+                              <td><a href="/deletetour?tour={{ tour.id }}">delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+	</div>
+</body>
+</html>
