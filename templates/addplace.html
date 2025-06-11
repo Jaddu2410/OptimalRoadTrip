@@ -1,0 +1,78 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Solutions required to solve the challenges faced by Law Investigating officers (LEOs) in Cyber Crimes</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+					<li><a href="/addtour">Add Tour</a></li>
+                    <li><a href="/viewtours">View Tours</a></li>
+                    <li><a href="/addplace">Add Place</a></li>
+                    <li><a href="/viewplaces">View Place</a></li>
+                     <li><a href="/viewmessages">View Message</a></li>
+                    <li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+
+                <h1>Add Place : {{message}} </h1>
+
+				<form name="form" action="/addplaceaction/" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="form_settings">
+						<p>
+							<span>Name :</span><input class="contact" type="text" name="name" value="" required/>
+						</p>
+
+						<p>
+							<span>Latitude:</span><input class="contact" type="text" name="lat" value="" required/>
+						</p>
+
+						<p>
+							<span>Longitude:</span><input class="contact" type="text" name="long" value="" required/>
+						</p>
+
+						<p>
+                            <span>Address</span><textarea class="contact" type="text" name="address" value="" required> </textarea>
+						</p>
+
+						<p>
+                            <span>Description</span><textarea class="contact" type="text" name="description" value="" required> </textarea>
+						</p>
+
+                        <p>
+							<span>Image</span><input class="contact" type="file" name="image" value="" required/>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Add Place" />
+						</p>
+
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
